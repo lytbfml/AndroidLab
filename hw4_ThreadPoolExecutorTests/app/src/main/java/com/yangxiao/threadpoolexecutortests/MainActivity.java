@@ -12,19 +12,22 @@ import android.widget.Button;
 import android.widget.TextView;
 import com.yangxiao.threadpoolexecutortests.settings.SettingActivity;
 import com.yangxiao.threadpoolexecutortests.thread.ThreadExeActivity;
-import com.yangxiao.threadpoolexecutortests.thread.ThreadExeFragment;
 import com.yangxiao.threadpoolexecutortests.util.Constants;
 import com.yangxiao.threadpoolexecutortests.util.MyTask;
+import com.yangxiao.threadpoolexecutortests.util.MyThreadPoolExe;
 import com.yangxiao.threadpoolexecutortests.util.MyThreadPoolManager;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, MyTask.TaskListener, MyThreadPoolExe.MyThreadPoolListener {
 	
-	public static final String TAG = "ThreadPoolExecutorTest.MAIN";
+	public static final String TAG = MainActivity.class.getSimpleName();
 	
 	public static final int PrefRequest = 2;
 	
 	TextView num_tasks, num_threads, num_threads_max, num_queue;
+	TextView num_tasks_completed_view, num_threads_active_view;
 	
+	private int num_tasks_completed = 0;
+	private int num_tasks_started = 0;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 		num_threads = findViewById(R.id.num_threads);
 		num_threads_max = findViewById(R.id.num_threads_max);
 		num_queue = findViewById(R.id.num_queue);
+		
+		num_tasks_completed_view = findViewById(R.id.num_tasks_complete);
+		num_threads_active_view = findViewById(R.id.num_threads_active);
 		
 		Button btn_start = findViewById(R.id.btn_start);
 		Button btn_pref = findViewById(R.id.btn_pref);
@@ -50,8 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 	
 	@Override
 	public void onClick(View v) {
-		switch (v.getId())
-		{
+		switch (v.getId()) {
 			case R.id.btn_start:
 				startThreadExe();
 				break;
@@ -63,6 +68,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 	}
 	
 	public void startThreadExe() {
+		findViewById(R.id.statusContainer).setVisibility(View.VISIBLE);
+		findViewById(R.id.titleS2).setVisibility(View.VISIBLE);
+		
 		Intent p = new Intent(getApplicationContext(), ThreadExeActivity.class);
 		prefsHolder holder = getPrefs();
 		p.putExtra(Constants.NUMBER_OF_TASKS, holder.num_tasks);
@@ -70,11 +78,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 		p.putExtra(Constants.NUMBER_OF_MAXIMUM_THREAD, holder.num_threads_max);
 		p.putExtra(Constants.NUMBER_OF_QUEUE, holder.num_queue);
 		
-		for(int i = 0; i < holder.num_tasks; i++) {
-			MyThreadPoolManager.getInstance(holder.num_threads, holder.num_threads_max).getMythreadPool().execute(new MyTask());
+		for (int i = 0; i < holder.num_tasks; i++) {
+			MyThreadPoolManager.getInstance(holder.num_threads, holder.num_threads_max, holder.num_queue, this).getMythreadPool
+					().execute(new MyTask(this));
 		}
-		
-//		startActivity(p);
 	}
 	
 	private prefsHolder getPrefs() {
@@ -94,8 +101,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 		return new prefsHolder(tasks, threads, threads_max, queue);
 	}
 	
-	public void popluatePrefs(prefsHolder prefs)
-	{
+	public void popluatePrefs(prefsHolder prefs) {
 		String temp1 = getString(R.string.number_of_tasks) + prefs.num_tasks;
 		String temp2 = getString(R.string.number_of_threads) + prefs.num_threads;
 		String temp3 = getString(R.string.number_of_maximum_threads) + prefs.num_threads_max;
@@ -105,6 +111,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 		num_threads.setText(temp2);
 		num_threads_max.setText(temp3);
 		num_queue.setText(temp4);
+	}
+	
+	@Override
+	public void taskStarted() {
+		num_tasks_started++;
+	}
+	
+	@Override
+	public void taskFinished() {
+		num_tasks_completed++;
+		String temp1 = getString(R.string.number_of_tasks_complete) + num_tasks_completed;
+		num_tasks_completed_view.setText(temp1);
+		Log.d(TAG, "Finished: " + num_tasks_completed);
+	}
+	
+	@Override
+	public void threadCount(int count) {
+		String temp1 = getString(R.string.number_of_threads_active) + count;
+		num_threads_active_view.setText(temp1);
 	}
 	
 	static class prefsHolder {

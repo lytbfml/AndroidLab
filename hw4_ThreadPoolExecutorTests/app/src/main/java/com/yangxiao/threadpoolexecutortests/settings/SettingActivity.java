@@ -3,6 +3,7 @@ package com.yangxiao.threadpoolexecutortests.settings;
 import android.preference.*;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.view.MenuItem;
 import com.yangxiao.threadpoolexecutortests.R;
 
 public class SettingActivity extends AppCompatPreferenceActivity {
@@ -24,6 +25,18 @@ public class SettingActivity extends AppCompatPreferenceActivity {
 		if (actionBar != null) {
 			// Show the Up button in the action bar.
 			actionBar.setDisplayHomeAsUpEnabled(true);
+		}
+	}
+	
+	public boolean onOptionsItemSelected(final MenuItem item) {
+		switch (item.getItemId()) {
+			case android.R.id.home:
+				//use onBackPressed() OR finish();
+				onBackPressed();
+				return true;
+			
+			default:
+				return super.onOptionsItemSelected(item);
 		}
 	}
 	
