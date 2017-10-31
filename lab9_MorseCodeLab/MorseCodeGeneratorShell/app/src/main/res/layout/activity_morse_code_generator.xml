@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="fill_parent"
+	android:id="@+id/relativeLayout1" 
+	android:layout_height="fill_parent"
+	android:layout_weight="0.72" xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<EditText
+		android:layout_width="200dp"
+		android:layout_height="wrap_content"
+		android:layout_centerHorizontal="true"
+		android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+		android:maxLength="25"
+		android:layout_marginTop="40dp"
+		android:id="@+id/msgText"/>
+
+
+	<Button
+		android:layout_marginTop="40dp"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/msgText"
+		android:layout_centerInParent="true"
+		android:id="@+id/btnSend"
+		android:onClick="blinkLED"
+		android:text="Send"/>
+
+</RelativeLayout>

@@ -1,2 +1,2 @@
 # AndroidLab
-Explore the android API
+Class lab, explore the Android API

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                tools:context="com.example.swamy.geoquiz.QuizActivity" android:id="@+id/layoutR">
+    <!--
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/the_blue_marble_earth1"/>-->
+    <TextView
+            android:id="@+id/mytext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Text Goes Here"
+            android:padding="24dp"
+            android:layout_marginTop="25dp"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"/>
+
+    <LinearLayout
+            android:id="@+id/options"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@+id/mytext"
+            android:layout_marginTop="70dp"
+            android:layout_centerHorizontal="true">
+
+        <Button
+                android:id="@+id/button_option1"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:visibility="gone"/>
+
+        <Button
+                android:id="@+id/button_option2"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:visibility="gone"/>
+
+        <Button
+                android:id="@+id/button_option3"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:visibility="gone"/>
+
+        <Button
+                android:id="@+id/button_option4"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:visibility="gone"/>
+
+        <Button
+                android:id="@+id/button_option5"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:visibility="gone"/>
+
+    </LinearLayout>
+
+    <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Next"
+            android:layout_marginBottom="80dp" android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>
