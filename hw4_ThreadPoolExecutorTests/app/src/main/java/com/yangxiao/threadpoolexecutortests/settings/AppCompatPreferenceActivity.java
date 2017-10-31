@@ -1,4 +1,4 @@
-package com.yangxiao.threadpoolexecutortests;
+package com.yangxiao.threadpoolexecutortests.settings;
 
 import android.content.res.Configuration;
 import android.os.Bundle;

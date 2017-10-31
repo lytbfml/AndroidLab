@@ -10,6 +10,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import com.yangxiao.threadpoolexecutortests.settings.SettingActivity;
+import com.yangxiao.threadpoolexecutortests.thread.ThreadExeActivity;
+import com.yangxiao.threadpoolexecutortests.thread.ThreadExeFragment;
+import com.yangxiao.threadpoolexecutortests.util.Constants;
+import com.yangxiao.threadpoolexecutortests.util.MyTask;
+import com.yangxiao.threadpoolexecutortests.util.MyThreadPoolManager;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 	
@@ -47,13 +53,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 		switch (v.getId())
 		{
 			case R.id.btn_start:
-				
+				startThreadExe();
 				break;
 			case R.id.btn_pref:
 				Intent p = new Intent(this, SettingActivity.class);
 				startActivityForResult(p, PrefRequest);
 				break;
 		}
+	}
+	
+	public void startThreadExe() {
+		Intent p = new Intent(getApplicationContext(), ThreadExeActivity.class);
+		prefsHolder holder = getPrefs();
+		p.putExtra(Constants.NUMBER_OF_TASKS, holder.num_tasks);
+		p.putExtra(Constants.NUMBER_OF_THREADS, holder.num_threads);
+		p.putExtra(Constants.NUMBER_OF_MAXIMUM_THREAD, holder.num_threads_max);
+		p.putExtra(Constants.NUMBER_OF_QUEUE, holder.num_queue);
+		
+		for(int i = 0; i < holder.num_tasks; i++) {
+			MyThreadPoolManager.getInstance(holder.num_threads, holder.num_threads_max).getMythreadPool().execute(new MyTask());
+		}
+		
+//		startActivity(p);
 	}
 	
 	private prefsHolder getPrefs() {

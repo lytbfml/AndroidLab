@@ -73,8 +73,10 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="settings">Settings</string>
     <string name="start">Start</string>
-    <string name="number_of_tasks">Number of tasks:</string>
-    <string name="number_of_threads">Number of threads:</string>
-    <string name="number_of_maximum_threads">Number of maximum threads:</string>
-    <string name="number_of_queses">Number of queses:</string>
+    <string name="number_of_tasks">Number of tasks: </string>
+    <string name="number_of_threads">Number of threads: </string>
+    <string name="number_of_maximum_threads">Number of maximum threads: </string>
+    <string name="number_of_queses">Number of queses: </string>
+    <string name="number_of_threads_active">Number of active threads: </string>
+    <string name="number_of_tasks_complete">Number of tasks completed: </string>
 </resources>

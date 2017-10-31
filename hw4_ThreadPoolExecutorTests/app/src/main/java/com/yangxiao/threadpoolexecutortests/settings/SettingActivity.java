@@ -1,10 +1,13 @@
-package com.yangxiao.threadpoolexecutortests;
+package com.yangxiao.threadpoolexecutortests.settings;
 
 import android.preference.*;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import com.yangxiao.threadpoolexecutortests.R;
 
 public class SettingActivity extends AppCompatPreferenceActivity {
+	
+	public static final String TAG = "SettingActivity";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
