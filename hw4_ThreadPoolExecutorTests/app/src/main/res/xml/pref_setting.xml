@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="Thread Settings">
+        <EditTextPreference android:defaultValue="20"
+                            android:key="mp_number_tasks"
+                            android:inputType="number"
+                            android:summary="Number of tasks to execute"
+                            android:title="Enter your value"/>
+        <EditTextPreference android:defaultValue="5"
+                            android:key="mp_number_threadsPool"
+                            android:inputType="number"
+                            android:summary="Number of threads"
+                            android:title="Enter your value"/>
+        <EditTextPreference android:defaultValue="100"
+                            android:key="mp_number_threadsPool_max"
+                            android:inputType="number"
+                            android:summary="Maximum number of threads"
+                            android:title="Enter your value"/>
+        <EditTextPreference android:defaultValue="20"
+                            android:key="mp_number_queue"
+                            android:inputType="number"
+                            android:summary="Size of queue"
+                            android:title="Enter your value"/>
+
+    </PreferenceCategory>
+
+
+
+
+</PreferenceScreen>
