@@ -71,12 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 		findViewById(R.id.statusContainer).setVisibility(View.VISIBLE);
 		findViewById(R.id.titleS2).setVisibility(View.VISIBLE);
 		
-		Intent p = new Intent(getApplicationContext(), ThreadExeActivity.class);
 		prefsHolder holder = getPrefs();
-		p.putExtra(Constants.NUMBER_OF_TASKS, holder.num_tasks);
-		p.putExtra(Constants.NUMBER_OF_THREADS, holder.num_threads);
-		p.putExtra(Constants.NUMBER_OF_MAXIMUM_THREAD, holder.num_threads_max);
-		p.putExtra(Constants.NUMBER_OF_QUEUE, holder.num_queue);
 		
 		for (int i = 0; i < holder.num_tasks; i++) {
 			MyThreadPoolManager.getInstance(holder.num_threads, holder.num_threads_max, holder.num_queue, this).getMythreadPool
