@@ -10,10 +10,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
         android:layout_marginTop="10dp"
         android:paddingLeft="10dp"
         android:textColor="#04b3d2"
-        android:textSize="16sp" />
+        android:textSize="24sp" />
 
     <!-- Media Player Buttons -->
     <LinearLayout

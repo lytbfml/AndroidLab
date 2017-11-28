@@ -14,6 +14,7 @@ public class Constants {
 		public static String STARTFOREGROUND_ACTION = "com.yw.hw5_musicplayerservice.action.startforeground";
 		public static String STOPFOREGROUND_ACTION = "com.yw.hw5_musicplayerservice.action.stopforeground";
 		public static String PAUSE_ACTION = "com.yw.hw5_musicplayerservice.action.pause";
+		public static final String CONTINUE = "com.yw.hw5_musicplayerservice.action.cont";
 	}
 	
 	public interface NOTIFICATION_ID {
