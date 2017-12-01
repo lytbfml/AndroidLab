@@ -143,8 +143,7 @@ public class MainActivity extends AppCompatActivity
             finish();
             startActivity(intent);
         } else if (id == R.id.nav_gallery) {
-            Intent searchAddress = new  Intent(Intent.ACTION_VIEW,Uri.parse("geo:0,0?q="+"Ames"));
-            startActivity(searchAddress);
+
         } else if (id == R.id.nav_camera) {
 
         } else if (id == R.id.nav_signout) {

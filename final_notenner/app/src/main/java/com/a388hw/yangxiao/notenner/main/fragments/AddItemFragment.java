@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,7 @@ public class AddItemFragment extends Fragment implements View.OnClickListener {
     private EditText eventDateS;
     private EditText eventDateE;
     private EditText eventDescription;
+    private EditText eventLocation;
     private Button saveEvent;
     private Button cancelEvent;
 
@@ -85,6 +87,8 @@ public class AddItemFragment extends Fragment implements View.OnClickListener {
         eventDateS.setOnClickListener(this);
         eventDateE = view.findViewById(R.id.eventDateE);
         eventDateE.setOnClickListener(this);
+        eventLocation = view.findViewById(R.id.eventLocation);
+        eventLocation.setOnClickListener(this);
         saveEvent = view.findViewById(R.id.saveEvent);
         saveEvent.setOnClickListener(this);
         cancelEvent = view.findViewById(R.id.cancelEvent);
@@ -118,9 +122,21 @@ public class AddItemFragment extends Fragment implements View.OnClickListener {
                 newFragmentE.setTargetFragment(fE, EVENT_DATE_END);
                 newFragmentE.show(getFragmentManager(), "DateTimePicker");
                 break;
+            case R.id.eventLocation:
+                String addr = eventLocation.getText().toString();
+                if (!addr.isEmpty()) {
+                    Intent searchAddress = new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("geo:0,0?q=" + addr));
+                    startActivity(searchAddress);
+                }
+
+                break;
             case R.id.saveEvent:
-                updateEvent();
-                getActivity().onBackPressed();
+                if(validation()){
+                    updateEvent();
+                    getActivity().onBackPressed();
+                }
+
                 break;
             case R.id.cancelEvent:
                 getActivity().onBackPressed();
@@ -138,19 +154,64 @@ public class AddItemFragment extends Fragment implements View.OnClickListener {
             reference.child(Event.START_TIME).setValue(eventDateS.getText().toString());
             reference.child(Event.END_TIME).setValue(eventDateE.getText().toString());
             reference.child(Event.EVENT_DETAIL).setValue(eventDescription.getText().toString());
+            reference.child(Event.EVENT_LOCATION).setValue(eventLocation.getText().toString());
         } else {
             User user = ((UserHolder) getActivity()).getUser();
             DatabaseReference reference = user.getDatabaseReference();
             reference.child("email").setValue(user.getEmail());
-            String key = reference.child("events").push().getKey();
-            reference.child("events").child(key).child(Event.EVENT_TITLE).setValue(
+            String key = reference.child(Event.PROPERTY_EVENTS).push().getKey();
+            reference.child(Event.PROPERTY_EVENTS).child(key).child(Event.EVENT_TITLE).setValue(
                     eventTitle.getText().toString());
-            reference.child("events").child(key).child(Event.START_TIME).setValue(
+            reference.child(Event.PROPERTY_EVENTS).child(key).child(Event.START_TIME).setValue(
                     eventDateS.getText().toString());
-            reference.child("events").child(key).child(Event.END_TIME).setValue(
+            reference.child(Event.PROPERTY_EVENTS).child(key).child(Event.END_TIME).setValue(
                     eventDateE.getText().toString());
-            reference.child("events").child(key).child(Event.EVENT_DETAIL).setValue(
+            reference.child(Event.PROPERTY_EVENTS).child(key).child(Event.EVENT_DETAIL).setValue(
                     eventDescription.getText().toString());
+            reference.child(Event.PROPERTY_EVENTS).child(key).child(Event.EVENT_LOCATION).setValue(
+                    eventLocation.getText().toString());
+
+        }
+    }
+
+    private boolean validation() {
+
+        // Reset errors.
+        eventTitle.setError(null);
+        eventDateS.setError(null);
+        eventDateE.setError(null);
+
+        // Store values at the time of the login attempt.
+        String title = eventTitle.getText().toString();
+        String st = eventDateS.getText().toString();
+        String et = eventDateE.getText().toString();
+
+        boolean cancel = false;
+        View focusView = null;
+
+        if (TextUtils.isEmpty(st)) {
+            eventDateS.setError(getString(R.string.error_field_required));
+            focusView = eventDateS;
+            cancel = true;
+        }
+
+        if (TextUtils.isEmpty(et)) {
+            eventDateE.setError(getString(R.string.error_field_required));
+            focusView = eventDateE;
+            cancel = true;
+        }
+
+        if (TextUtils.isEmpty(title)) {
+            eventTitle.setError(getString(R.string.error_field_required));
+            focusView = eventTitle;
+            cancel = true;
+        }
+
+        if (cancel) {
+            focusView.requestFocus();
+            return false;
+        } else {
+            return true;
         }
     }
 

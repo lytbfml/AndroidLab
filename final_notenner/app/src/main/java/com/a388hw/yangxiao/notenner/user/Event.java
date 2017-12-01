@@ -17,8 +17,9 @@ public class Event implements Parcelable {
     public static final String START_TIME = "Start_time";
     public static final String END_TIME = "End_time";
     public static final String EVENT_DETAIL = "Event_detail";
+    public static final String EVENT_LOCATION = "Event_location";
 
-    private String title, startTime, endTime, detail, key;
+    private String title, startTime, endTime, detail, key, location;
 
     protected Event(Parcel in) {
         title = in.readString();
@@ -26,6 +27,7 @@ public class Event implements Parcelable {
         endTime = in.readString();
         detail = in.readString();
         key = in.readString();
+        location = in.readString();
     }
 
     public static final Creator<Event> CREATOR = new Creator<Event>() {
@@ -48,12 +50,13 @@ public class Event implements Parcelable {
         return key != null ? key.equals(event.key) : event.key == null;
     }
 
-    public Event(String key, String title, String startTime, String endTime, String detail) {
-        this.key = key;
+    public Event(String key, String title, String startTime, String endTime, String detail, String location) {
         this.title = title;
         this.startTime = startTime;
         this.endTime = endTime;
         this.detail = detail;
+        this.key = key;
+        this.location = location;
     }
 
 
@@ -77,6 +80,10 @@ public class Event implements Parcelable {
         return key;
     }
 
+    public String getLocation() {
+        return location;
+    }
+
 
     @Override
     public int describeContents() {
@@ -90,5 +97,6 @@ public class Event implements Parcelable {
         dest.writeString(endTime);
         dest.writeString(detail);
         dest.writeString(key);
+        dest.writeString(location);
     }
 }

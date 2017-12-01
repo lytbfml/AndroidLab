@@ -149,6 +149,7 @@ public class EventsListFragment extends Fragment {
                     String st = "";
                     String et = "";
                     String ed = "";
+                    String loc = "";
 
                     for (DataSnapshot children : dataSnapshot.getChildren()) {
 //                        Log.e(TAG,
@@ -166,11 +167,14 @@ public class EventsListFragment extends Fragment {
                             case Event.EVENT_DETAIL:
                                 ed = children.getValue(String.class);
                                 break;
+                            case Event.EVENT_LOCATION:
+                                loc = children.getValue(String.class);
+                                break;
                         }
                     }
                     nameList.add(title);
 
-                    Event event = new Event(key, title, st, et, ed);
+                    Event event = new Event(key, title, st, et, ed, loc);
 
                     eventsData.put(key, event);
                     eventsDataList.add(event);
@@ -190,6 +194,7 @@ public class EventsListFragment extends Fragment {
                 String st = "";
                 String et = "";
                 String ed = "";
+                String loc = "";
 
                 for (DataSnapshot children : dataSnapshot.getChildren()) {
 //                    Log.e(TAG,
@@ -206,10 +211,12 @@ public class EventsListFragment extends Fragment {
                             break;
                         case Event.EVENT_DETAIL:
                             ed = children.getValue(String.class);
+                        case Event.EVENT_LOCATION:
+                            loc = children.getValue(String.class);
                             break;
                     }
 
-                    Event event = new Event(key, title, st, et, ed);
+                    Event event = new Event(key, title, st, et, ed, loc);
 
                     eventsData.put(key, event);
                     eventsDataList.remove(event);

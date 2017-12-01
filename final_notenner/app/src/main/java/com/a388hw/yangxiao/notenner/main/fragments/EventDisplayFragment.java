@@ -1,5 +1,7 @@
 package com.a388hw.yangxiao.notenner.main.fragments;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -24,7 +26,7 @@ public class EventDisplayFragment extends Fragment {
 
     private static final String EVENT_ = "EVENT";
 
-    TextView et, st, title, detail;
+    TextView et, st, title, detail, loc;
     Button editBtn;
 
     Event event;
@@ -68,11 +70,25 @@ public class EventDisplayFragment extends Fragment {
         title = root.findViewById(R.id.title);
         detail = root.findViewById(R.id.content);
         st = root.findViewById(R.id.st);
+        loc = root.findViewById(R.id.loc);
 
         et.setText(event.getEndTime());
         title.setText(event.getTitle());
         detail.setText(event.getDetail());
         st.setText(event.getStartTime());
+        loc.setText(event.getLocation());
+
+        loc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String addr = loc.getText().toString();
+                if (!addr.isEmpty()) {
+                    Intent searchAddress = new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("geo:0,0?q=" + addr));
+                    startActivity(searchAddress);
+                }
+            }
+        });
 
         editBtn = root.findViewById(R.id.editEvent);
         editBtn.setOnClickListener(new View.OnClickListener() {
