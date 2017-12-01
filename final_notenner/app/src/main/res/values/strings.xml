@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Notenner</string>
+
+    <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
+    <string name="facebook_application_id" translatable="false">162637761007632</string>
+    <string name="facebook_login_protocol_scheme" translatable="false">e75041065c659a1a2d6e23fd6c9f073b</string>
+    <!-- Twitter consumer key and secret -->
+    <string name="twitter_consumer_key" translatable="false">2d4bx2dCD0t8nEfbpkJSlDemQ</string>
+    <string name="twitter_consumer_secret" translatable="false">1EejS78aORyelw9am2ZxnNCeYRd9B8IcBsBlMvnpOOdxzj6BgS</string>
+    <string name="sign_in_cancelled">Sign in cancelled</string>
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="unknown_error">Unknown error</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="welcomeStr">Welcome!</string>
+    <string name="mainViewTitle">Notenner</string>
+</resources>

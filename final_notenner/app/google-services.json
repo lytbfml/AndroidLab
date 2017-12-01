@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "184752663250",
+    "firebase_url": "https://notenner-c170a.firebaseio.com",
+    "project_id": "notenner-c170a",
+    "storage_bucket": "notenner-c170a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:184752663250:android:bba427aea92d87db",
+        "android_client_info": {
+          "package_name": "com.a388hw.yangxiao.notenner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "184752663250-tc4lla070l9odsqlm84fqm5puah2dn75.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.a388hw.yangxiao.notenner",
+            "certificate_hash": "8df79caf3bcdd6937d32bbbcebaf8968db41d526"
+          }
+        },
+        {
+          "client_id": "184752663250-a0eehi1hmuenj3m06uf60cmhr1p0e7s7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFXMrFpxySm2Ohdj8X5Pwn0tVzt5At25s"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "184752663250-a0eehi1hmuenj3m06uf60cmhr1p0e7s7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
