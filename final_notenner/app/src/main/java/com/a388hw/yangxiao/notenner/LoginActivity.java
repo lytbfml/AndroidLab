@@ -28,7 +28,7 @@ import static com.a388hw.yangxiao.notenner.util.util.showSnackbar;
 
 public class LoginActivity extends AppCompatActivity {
 
-    public static final String TAG = LoginActivity.class.getSimpleName();
+    public static final String TAG = "LoginActivity";
     private static final int RC_SIGN_IN = 123;
 
     TextView txtViewMain;
@@ -48,6 +48,21 @@ public class LoginActivity extends AppCompatActivity {
                 signIn();
             }
         });
+
+        autoSignIn();
+    }
+
+    private boolean autoSignIn()
+    {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() != null) {
+            FirebaseUser user = auth.getCurrentUser();
+            txtViewMain.setText(user.getDisplayName());
+            goToMain(getApplicationContext(), "");
+            finish();
+            return true;
+        }
+        return false;
     }
 
     private void signIn() {

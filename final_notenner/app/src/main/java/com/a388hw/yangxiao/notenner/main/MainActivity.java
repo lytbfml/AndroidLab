@@ -1,13 +1,14 @@
 package com.a388hw.yangxiao.notenner.main;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -19,20 +20,31 @@ import android.view.View;
 
 import com.a388hw.yangxiao.notenner.LoginActivity;
 import com.a388hw.yangxiao.notenner.R;
+import com.a388hw.yangxiao.notenner.main.fragments.AddItemFragment;
+import com.a388hw.yangxiao.notenner.main.fragments.EventDisplayFragment;
+import com.a388hw.yangxiao.notenner.main.fragments.EventsListFragment;
+import com.a388hw.yangxiao.notenner.user.Event;
+import com.a388hw.yangxiao.notenner.user.User;
+import com.a388hw.yangxiao.notenner.util.UserHolder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.EventListener;
 
 import static com.a388hw.yangxiao.notenner.util.util.showSnackbar;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, UserHolder, EventsListFragment.OnListFragmentInteractionListener {
 
-    public static final String TAG = LoginActivity.class.getSimpleName();
+    public static final String TAG = "MainActivity";
     public static final String LOGOUT_TAG = "ActLogout";
 
-    FirebaseAuth firebaseAuth;
-    FirebaseUser firebaseUser;
+    User user;
     String username;
+
+    public static final String USERS_DIRECTORY = "/users/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +53,10 @@ public class MainActivity extends AppCompatActivity
 
         initView();
         initData();
-
+        switchTo(EventsListFragment.TAG, null, true);
     }
 
-    public void initView()
-    {
+    public void initView() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle(R.string.mainViewTitle);
@@ -54,8 +65,9 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                //                        .setAction("Action", null).show();
+                switchTo(AddItemFragment.TAG, null, true);
             }
         });
 
@@ -70,11 +82,15 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    public void initData()
-    {
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseUser = firebaseAuth.getCurrentUser();
+    public void initData() {
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         username = firebaseUser.getEmail();
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+        user = new User(username,
+                database.getReference(USERS_DIRECTORY).child(firebaseUser.getUid()));
 
         showSnackbar(getWindow().getDecorView().getRootView(), getApplicationContext(),
                 "You are signed in as: " + firebaseUser.getEmail());
@@ -86,7 +102,11 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
+                finish();
+            } else {
+                super.onBackPressed();
+            }
         }
     }
 
@@ -119,10 +139,12 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-
-
+            Intent intent = getIntent();
+            finish();
+            startActivity(intent);
         } else if (id == R.id.nav_gallery) {
-
+            Intent searchAddress = new  Intent(Intent.ACTION_VIEW,Uri.parse("geo:0,0?q="+"Ames"));
+            startActivity(searchAddress);
         } else if (id == R.id.nav_camera) {
 
         } else if (id == R.id.nav_signout) {
@@ -138,32 +160,41 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public boolean switchTo(String tag, Bundle args, boolean toBackStack){
+    public boolean switchTo(String tag, Event event, boolean toBackStack) {
+
         if (tag.equals(LOGOUT_TAG)) {
             signOut();
             return true;
         }
-        Fragment fragment = getFragmentFromTag(tag);
+
+        Fragment fragment = getFragmentFromTag(tag, event);
         if (fragment == null) {
             return false;
         }
-        if (args != null) {
-            fragment.setArguments(args);
-        }
 
-        FragmentManager fagManager = getFragmentManager();
+        FragmentManager fagManager = getSupportFragmentManager();
         FragmentTransaction transaction = fagManager.beginTransaction();
-        transaction.replace(R.id.content, fragment, tag);
+        transaction.replace(R.id.mainContent, fragment, tag);
         if (toBackStack) {
             transaction.addToBackStack(tag);
         }
         transaction.commit();
+
         return true;
     }
 
-    private Fragment getFragmentFromTag(String tag) {
+    private Fragment getFragmentFromTag(String tag, Event event) {
         switch (tag) {
-
+            case AddItemFragment.TAG:
+                if (event != null) {
+                    return AddItemFragment.newInstance(event);
+                } else {
+                    return new AddItemFragment();
+                }
+            case EventsListFragment.TAG:
+                return EventsListFragment.newInstance("1", "2");
+            case EventDisplayFragment.TAG:
+                return EventDisplayFragment.newInstance(event);
         }
         return null;
     }
@@ -171,5 +202,15 @@ public class MainActivity extends AppCompatActivity
     private void signOut() {
         FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(this, LoginActivity.class));
+    }
+
+    @Override
+    public User getUser() {
+        return user;
+    }
+
+    @Override
+    public void onListFragmentInteraction(Event event) {
+        switchTo(EventDisplayFragment.TAG, event, true);
     }
 }

@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Agenda1.iml" filepath="$PROJECT_DIR$/Agenda1.iml" />
+      <module fileurl="file://C:\Users\lytbf\Documents\Code\AndroidLab\lab5_Agenda\Agenda1.iml" filepath="C:\Users\lytbf\Documents\Code\AndroidLab\lab5_Agenda\Agenda1.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\lytbf\Documents\Code\AndroidLab\lab5_Agenda\app\app.iml" filepath="C:\Users\lytbf\Documents\Code\AndroidLab\lab5_Agenda\app\app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lab5_Agenda.iml" filepath="$PROJECT_DIR$/lab5_Agenda.iml" />
     </modules>
   </component>
 </project>
